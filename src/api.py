@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from weekly_report import main
+from src.weekly_report import main
 
 app = FastAPI()
 
