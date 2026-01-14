@@ -1,9 +1,9 @@
-from config.settings import settings
+from airtable_client import fetch_all_records
 
 
 def main():
-    print("Airtable table:", settings.AIRTABLE_TABLE_NAME)
-    print("Report days:", settings.REPORT_DAYS)
+    records = fetch_all_records()
+    print(f"Fetched records: {len(records)}")
 
 
 if __name__ == "__main__":
