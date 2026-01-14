@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 from pprint import pprint
 
-from airtable_client import fetch_all_records
-from report_writer import write_csv_report
-from utils.normalizer import normalize_records
-from metrics import calculate_metrics
+from src.airtable_client import fetch_all_records
+from src.utils.normalizer import normalize_records
+from src.metrics import calculate_metrics
+from src.report_writer import write_csv_report
 from config.settings import settings
 
 
