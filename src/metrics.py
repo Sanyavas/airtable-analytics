@@ -22,7 +22,16 @@ def calculate_metrics(
         created_at = record.get("created_at")
         completed_at = record.get("completed_at")
         status = record.get("status")
-        consultant = record.get("consultant")
+
+        raw_consultant = record.get("consultant")
+
+        # 🔑 NORMALIZATION (KEY FIX)
+        if not raw_consultant:
+            consultant = "Unassigned"
+        elif isinstance(raw_consultant, list):
+            consultant = raw_consultant[0] if raw_consultant else "Unassigned"
+        else:
+            consultant = raw_consultant
 
         if created_at and created_at >= period_start:
             new_requests += 1
