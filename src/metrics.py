@@ -9,6 +9,7 @@ def calculate_metrics(
     now: datetime,
 ) -> Dict[str, Any]:
     """Calculate weekly metrics"""
+
     period_start = now - timedelta(days=report_days)
 
     new_requests = 0
@@ -53,7 +54,6 @@ def calculate_metrics(
     )
 
     top_consultants = consultant_counter.most_common(3)
-    print(top_consultants)
 
     completion_rate = (
         round((completed_requests / new_requests) * 100, 2)
