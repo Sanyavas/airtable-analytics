@@ -26,6 +26,7 @@ def normalize_records(raw_records: List[Dict[str, Any]]) -> List[Dict[str, Any]]
                 "completed_at": parse_datetime(fields.get("Completed At")),
                 "status": fields.get("Status"),
                 "consultant": fields.get("Assigned Consultant"),
+                "consultant_name": fields.get("Consultant Name"),
             }
         )
 

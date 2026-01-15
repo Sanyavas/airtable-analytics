@@ -20,18 +20,18 @@ def write_csv_report(metrics: Dict[str, Any]) -> Path:
         ("new_requests_7d", metrics["new_requests_7d"]),
         ("completed_requests_7d", metrics["completed_requests_7d"]),
         ("avg_processing_time_hours", metrics["avg_processing_time_hours"]),
+        ("completion_rate_percent", metrics["completion_rate_percent"]),
     ]
 
-    # Top consultants
     top_consultants = metrics.get("top_consultants", [])
+
     for i in range(3):
         if i < len(top_consultants):
             name, count = top_consultants[i]
-            value = f"{name} ({count})"
         else:
-            value = "—"
+            name, count = "", "---"
 
-        rows.append((f"top_consultant_{i + 1}", value))
+        rows.append((f"{i+1}_consultant_{name}", count))
 
     with filepath.open(mode="w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
@@ -53,18 +53,17 @@ def build_csv_bytes(metrics: Dict[str, Any]) -> bytes:
         ("new_requests_7d", metrics["new_requests_7d"]),
         ("completed_requests_7d", metrics["completed_requests_7d"]),
         ("avg_processing_time_hours", metrics["avg_processing_time_hours"]),
+        ("completion_rate_percent", metrics["completion_rate_percent"]),
     ]
 
-    # Top consultants
     top_consultants = metrics.get("top_consultants", [])
     for i in range(3):
         if i < len(top_consultants):
             name, count = top_consultants[i]
-            value = f"{name} ({count})"
         else:
-            value = "—"
+            name, count = "", "---"
 
-        rows.append((f"top_consultant_{i + 1}", value))
+        rows.append((f"{i + 1}_consultant_{name}", count))
 
     writer.writerow(["metric", "value"])
     writer.writerows(rows)

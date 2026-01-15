@@ -8,9 +8,7 @@ def calculate_metrics(
     report_days: int,
     now: datetime,
 ) -> Dict[str, Any]:
-    """
-    Calculate weekly operational metrics.
-    """
+    """Calculate weekly metrics"""
     period_start = now - timedelta(days=report_days)
 
     new_requests = 0
@@ -23,15 +21,14 @@ def calculate_metrics(
         completed_at = record.get("completed_at")
         status = record.get("status")
 
-        raw_consultant = record.get("consultant")
+        raw_consultant = record.get("consultant_name")
 
-        # 🔑 NORMALIZATION (KEY FIX)
-        if not raw_consultant:
-            consultant = "Unassigned"
-        elif isinstance(raw_consultant, list):
-            consultant = raw_consultant[0] if raw_consultant else "Unassigned"
-        else:
+        if isinstance(raw_consultant, list) and raw_consultant:
+            consultant = raw_consultant[0]
+        elif isinstance(raw_consultant, str) and raw_consultant.strip():
             consultant = raw_consultant
+        else:
+            consultant = "Unassigned"
 
         if created_at and created_at >= period_start:
             new_requests += 1
@@ -56,10 +53,18 @@ def calculate_metrics(
     )
 
     top_consultants = consultant_counter.most_common(3)
+    print(top_consultants)
+
+    completion_rate = (
+        round((completed_requests / new_requests) * 100, 2)
+        if new_requests > 0
+        else 0
+    )
 
     return {
         "new_requests_7d": new_requests,
         "completed_requests_7d": completed_requests,
         "avg_processing_time_hours": round(avg_processing_time_hours, 2),
         "top_consultants": top_consultants,
+        "completion_rate_percent": completion_rate,
     }
