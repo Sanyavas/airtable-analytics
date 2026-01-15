@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from src.weekly_report import main
 
 app = FastAPI()
@@ -6,5 +6,14 @@ app = FastAPI()
 
 @app.post("/run-weekly-report")
 def run_report():
-    main()
-    return {"status": "ok"}
+    csv_bytes = main()
+
+    headers = {
+        "Content-Disposition": 'attachment; filename="weekly_report.csv"'
+    }
+
+    return Response(
+        content=csv_bytes,
+        media_type="text/csv",
+        headers=headers,
+    )
