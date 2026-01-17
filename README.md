@@ -16,7 +16,7 @@ End-to-end automation for generating and delivering weekly analytics reports fro
 
   * fetch data from Airtable
   * calculate metrics
-  * generate CSV in memory
+  * generate CSV
 
 * **Docker** — isolation and deployment
 
@@ -41,6 +41,7 @@ Email with attachment (n8n)
 * New requests (last 7 days)
 * Completed requests (last 7 days)
 * Average processing time (Created → Completed)
+* Completion rate (%)
 * Top 3 consultants by completed requests
 
 ---
